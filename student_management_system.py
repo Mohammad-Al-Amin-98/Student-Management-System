@@ -164,10 +164,6 @@ while True:
 			students_python_dict[f"Student {i}"]["Courses"] = students[st].courses
 			i += 1
 
-		json_students = json.dumps(students_python_dict, indent=4)
-		with open("json_students_and_courses.json", "w") as file:
-			file.write(json_students)
-
 		courses_python_dict = {}
 		i = 1
 		for course in courses:
@@ -177,17 +173,25 @@ while True:
 			courses_python_dict[f"Course {i}"]["Course Instructor"] = courses[course].instructor
 			courses_python_dict[f"Course {i}"]["Enrolled Students"] = courses[course].students
 			i += 1
-		json_courses = json.dumps(courses_python_dict, indent=4)
-		with open("json_students_and_courses.json", "a") as file:
-			file.write(json_courses)
-		print("File Saved Successfully!")
+
+		all_data_dict = {}
+		all_data_dict["students"] = students_python_dict
+		all_data_dict["courses"] = courses_python_dict
+		json_data = json.dumps(all_data_dict, indent=4)
+		
+		with open("all_data.json", "w") as file:
+			file.write(json_data)
+
+		print("All data saved to file Successfully!")
 		print()
 	
 	elif option == 8:
 		retrieved_data = ""
-		with open("json_students_and_courses.json", "r") as file:
+		with open("all_data.json", "r") as file:
 			retrieved_data = file.read()
-		print(retrieved_data)
+		loaded_data = json.loads(retrieved_data)
+		print("Data loaded from file successfully!")
+		print()
 
 
 	elif option == 0:
